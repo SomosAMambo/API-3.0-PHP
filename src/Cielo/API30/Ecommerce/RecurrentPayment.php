@@ -16,6 +16,8 @@ class RecurrentPayment implements \JsonSerializable
 
     private $authorizeNow;
 
+    private $startDate;
+
     private $endDate;
 
     private $interval;
@@ -29,10 +31,11 @@ class RecurrentPayment implements \JsonSerializable
     {
         return get_object_vars($this);
     }
-    
+
     public function populate(\stdClass $data)
     {
         $this->authorizeNow = isset($data->AuthorizeNow)? !!$data->AuthorizeNow: false;
+        $this->startDate = isset($data->StartDate)? $data->StartDate: null;
         $this->endDate = isset($data->EndDate)? $data->EndDate: null;
         $this->interval = isset($data->Interval)? !!$data->Interval: null;
     }
@@ -45,6 +48,17 @@ class RecurrentPayment implements \JsonSerializable
     public function setAuthorizeNow($authorizeNow)
     {
         $this->authorizeNow = $authorizeNow;
+        return $this;
+    }
+
+    public function getStartDate()
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate($startDate)
+    {
+        $this->startDate = $startDate;
         return $this;
     }
 
