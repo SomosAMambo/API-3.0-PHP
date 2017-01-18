@@ -36,6 +36,8 @@ class Payment implements \JsonSerializable
 
     private $debitCard;
 
+    private $authenticationUrl;
+
     private $tid;
 
     private $proofOfSale;
@@ -112,16 +114,17 @@ class Payment implements \JsonSerializable
             $this->recurrentPayment->populate($data->RecurrentPayment);
         }
 
-        if ($this->getType() == self::PAYMENTTYPE_CREDITCARD) {
+        if (isset($data->CreditCard)) {
             $this->creditCard = new CreditCard();
             $this->creditCard->populate($data->CreditCard);
         }
 
-        if ($this->getType() == self::PAYMENTTYPE_DEBITCARD) {
+        if (isset($data->DebitCard)) {
             $this->debitCard = new CreditCard();
-            $this->debitCard->populate($data->CreditCard);
+            $this->debitCard->populate($data->DebitCard);
         }
 
+        $this->authenticationUrl = isset($data->AuthenticationUrl)? $data->AuthenticationUrl: null;
         $this->tid = isset($data->Tid)? $data->Tid: null;
         $this->proofOfSale = isset($data->ProofOfSale)? $data->ProofOfSale: null;
         $this->authorizationCode = isset($data->AuthorizationCode)? $data->AuthorizationCode: null;
@@ -148,28 +151,33 @@ class Payment implements \JsonSerializable
         return $payment;
     }
 
+    private function newCard($securityCode, $brand)
+    {
+        $card = new CreditCard();
+        $card->setSecurityCode($securityCode);
+        $card->setBrand($brand);
+
+        return $card;
+    }
+
     public function creditCard($securityCode, $brand)
     {
-        $creditCard = new CreditCard();
-        $creditCard->setSecurityCode($securityCode);
-        $creditCard->setBrand($brand);
-        if ($this->getType() == self::PAYMENTTYPE_CREDITCARD) {
-            $this->setCreditCard($creditCard);
-        } else {
-            $this->setDebitCard($creditCard);
-        }
-        return $creditCard;
+        $card = $this->newCard($securityCode, $brand);
+
+        $this->setType(self::PAYMENTTYPE_CREDITCARD);
+        $this->setCreditCard($card);
+
+        return $card;
     }
 
     public function debitCard($securityCode, $brand)
     {
-        $creditCard = new CreditCard();
-        $creditCard->setSecurityCode($securityCode);
-        $creditCard->setBrand($brand);
-        $this->setType(self::PAYMENTTYPE_DEBITCARD);
-        $this->setDebitCard($creditCard);
+        $card = $this->newCard($securityCode, $brand);
 
-        return $creditCard;
+        $this->setType(self::PAYMENTTYPE_DEBITCARD);
+        $this->setDebitCard($card);
+
+        return $card;
     }
 
     public function recurrentPayment($authorizeNow = true)
@@ -266,6 +274,34 @@ class Payment implements \JsonSerializable
     public function setCreditCard(CreditCard $creditCard)
     {
         $this->creditCard = $creditCard;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDebitCard()
+    {
+        return $this->debitCard;
+    }
+
+    /**
+     * @param mixed $debitCard
+     */
+    public function setDebitCard($debitCard)
+    {
+        $this->debitCard = $debitCard;
+        return $this;
+    }
+
+    public function getAuthenticationUrl()
+    {
+        return $this->authenticationUrl;
+    }
+
+    public function setAuthenticationUrl($authenticationUrl)
+    {
+        $this->authenticationUrl = $authenticationUrl;
         return $this;
     }
 
@@ -542,21 +578,5 @@ class Payment implements \JsonSerializable
     {
         $this->address = $address;
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDebitCard()
-    {
-        return $this->debitCard;
-    }
-
-    /**
-     * @param mixed $debitCard
-     */
-    public function setDebitCard($debitCard)
-    {
-        $this->debitCard = $debitCard;
     }
 }
