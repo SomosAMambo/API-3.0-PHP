@@ -67,7 +67,7 @@ class RecurrentPayment implements \JsonSerializable
         $this->recurrentPaymentId = isset($data->RrecurrentPaymentId)? $data->RecurrentPaymentId: null;
         $this->nextRecurrency = isset($data->NextRecurrency)? $data->NextRecurrency: null;
         $this->amount = isset($data->Amount)? $data->Amount: null;
-        $this->country = isset($data->Country)? $data->Ccountry: null;
+        $this->country = isset($data->Country)? $data->Country: null;
         $this->createDate = isset($data->CreateDate)? $data->CreateDate: null;
         $this->currency = isset($data->Currency)? $data->Currency: null;
         $this->currentRecurrencyTry = isset($data->CurrentRecurrencyTry)? $data->CurrentRecurrencyTry: null;
