@@ -64,19 +64,19 @@ class RecurrentPayment implements \JsonSerializable
         $this->startDate = isset($data->StartDate)? $data->StartDate: null;
         $this->endDate = isset($data->EndDate)? $data->EndDate: null;
         $this->interval = isset($data->Interval)? !!$data->Interval: null;
-        $this->recurrentPaymentId = isset($data->recurrentPaymentId)? $data->recurrentPaymentId: null;
-        $this->nextRecurrency = isset($data->nextRecurrency)? $data->nextRecurrency: null;
-        $this->amount = isset($data->amount)? $data->amount: null;
-        $this->country = isset($data->country)? $data->country: null;
-        $this->createDate = isset($data->createDate)? $data->createDate: null;
-        $this->currency = isset($data->currency)? $data->currency: null;
-        $this->currentRecurrencyTry = isset($data->currentRecurrencyTry)? $data->currentRecurrencyTry: null;
-        $this->provider = isset($data->provider)? $data->provider: null;
-        $this->recurrencyDay = isset($data->recurrencyDay)? $data->recurrencyDay: null;
-        $this->successfulRecurrences = isset($data->successfulRecurrences)? $data->successfulRecurrences: null;
-        $this->links = isset($data->links)? $data->links: null;
-        $this->recurrentTransactions = isset($data->recurrentTransactions)? $data->recurrentTransactions: null;
-        $this->status = isset($data->status)? $data->status: null;
+        $this->recurrentPaymentId = isset($data->RrecurrentPaymentId)? $data->RecurrentPaymentId: null;
+        $this->nextRecurrency = isset($data->NextRecurrency)? $data->NextRecurrency: null;
+        $this->amount = isset($data->Amount)? $data->Amount: null;
+        $this->country = isset($data->Country)? $data->Ccountry: null;
+        $this->createDate = isset($data->CreateDate)? $data->CreateDate: null;
+        $this->currency = isset($data->Currency)? $data->Currency: null;
+        $this->currentRecurrencyTry = isset($data->CurrentRecurrencyTry)? $data->CurrentRecurrencyTry: null;
+        $this->provider = isset($data->Provider)? $data->Provider: null;
+        $this->recurrencyDay = isset($data->RecurrencyDay)? $data->RecurrencyDay: null;
+        $this->successfulRecurrences = isset($data->SuccessfulRecurrences)? $data->SuccessfulRecurrences: null;
+        $this->links = isset($data->Links)? $data->Links: null;
+        $this->recurrentTransactions = isset($data->RecurrentTransactions)? $data->RecurrentTransactions: null;
+        $this->status = isset($data->Status)? $data->Status: null;
     }
 
     public function getAuthorizeNow()
